@@ -93,7 +93,7 @@ df_order['total_amount'] = pd.to_numeric(df_order['total_amount'])
 #Declaring the Top 'X' customers method.
 def TopXSimpleLTVCustomers(X, df_visit, df_order, df_customer):
 	
-        #Defining the dictionaries for both visits and orders.
+    #Defining the dictionaries for both visits and orders.
 	ltvOrder = OrderedDict()
 	ltvVisit = OrderedDict()
 	
@@ -165,8 +165,9 @@ def TopXSimpleLTVCustomers(X, df_visit, df_order, df_customer):
 		DF.loc[i, 'averageLTV'] = np.sum(DF.ix[i,(col_in):(col_fin)])*52*10
 	
 	DF = pd.merge(DF, df_customer, on='customer_id', how='outer')
+	DF = DF[['customer_id', 'last_name', 'adr_city', 'adr_state', 'averageLTV']]
 	#Sorting all LTV's in descending order for all 'X' customers.
-        DF = DF.sort_values('averageLTV', ascending = False)
+	DF = DF.sort_values('averageLTV', ascending = False) 
 	return(DF.head(X))
 		
 LTV = TopXSimpleLTVCustomers(X, df_visit, df_order, df_customer)
